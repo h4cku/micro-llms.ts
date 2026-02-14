@@ -117,4 +117,17 @@ export class GPT {
 
     return linear(x, this.state.lm_head!);
   }
+
+  async save(path: string = "./model.bin") {
+    let rawData: number[] = this.params.map((e) => e.data);
+    let floatArray = new Float64Array(rawData);
+    await Bun.write(path, floatArray.buffer);
+  }
+
+  async load(path: string = "./model.bin") {
+    const file = Bun.file(path);
+    const bytes = await file.bytes();
+    let floatArray = new Float64Array(bytes.buffer);
+    this.params.forEach((v, i, _) => (v.data = floatArray[i]!));
+  }
 }

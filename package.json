@@ -8,6 +8,7 @@
     "typescript": "^5"
   },
   "scripts": {
-    "train": "bun run ./main.ts"
+    "train": "bun run ./main.ts train",
+    "infere": "bun run ./main.ts infere"
   }
 }

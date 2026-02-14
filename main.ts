@@ -19,5 +19,11 @@ let gptConfig = new GPTConfig();
 let gpt = new GPT(gptConfig, tok);
 let optim = new Adam(gpt.getParams());
 
-train(gpt, tok, optim, docs);
-infere(gpt, tok);
+if (Bun.argv[2] == "train") {
+  train(gpt, tok, optim, docs);
+  infere(gpt, tok);
+  gpt.save();
+} else if (Bun.argv[2] == "infere") {
+  await gpt.load();
+  infere(gpt, tok);
+}
