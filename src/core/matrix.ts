@@ -1,5 +1,5 @@
-import { randn } from "./utils";
-import { Value } from "./value";
+import { randn } from "../utils/func";
+import { Value } from "../core/value";
 
 export function matrix(nout: number, nin: number, std = 0.02) {
   return Array.from({ length: nout }, () =>

@@ -1,12 +1,14 @@
-import type { GPT } from "./gpt";
-import type { Adam } from "./optim";
-import type { Tokenizer } from "./tokenizer";
-import type { Value } from "./value";
-import { weightedChoice } from "./utils";
-import { softmax } from "./ops";
+import type { GPT } from "../models/gpt";
+import type { Adam } from "../core/optim";
+import type { Tokenizer } from "../core/tokenizer";
+import type { Value } from "../core/value";
+import { weightedChoice } from "./func";
+import { softmax } from "../core/ops";
+import type { Llama } from "../models/llama";
+import type { Deepseek } from "../models/deepseek";
 
 export function train(
-  model: GPT,
+  model: GPT | Llama | Deepseek,
   tok: Tokenizer,
   optim: Adam,
   docs: string[],
@@ -40,7 +42,7 @@ export function train(
   }
 }
 
-export function infere(model: GPT, tok: Tokenizer) {
+export function infere(model: GPT | Llama | Deepseek, tok: Tokenizer) {
   console.log("\n--- inference ---");
 
   for (let s = 0; s < 20; s++) {
