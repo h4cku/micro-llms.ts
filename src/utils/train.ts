@@ -6,9 +6,10 @@ import { weightedChoice } from "./func";
 import { softmax } from "../core/ops";
 import type { Llama } from "../models/llama";
 import type { Deepseek } from "../models/deepseek";
+import type { SmolLM3 } from "../models/somllm";
 
 export function train(
-  model: GPT | Llama | Deepseek,
+  model: GPT | Llama | Deepseek | SmolLM3,
   tok: Tokenizer,
   optim: Adam,
   docs: string[],
@@ -42,7 +43,10 @@ export function train(
   }
 }
 
-export function infere(model: GPT | Llama | Deepseek, tok: Tokenizer) {
+export function infere(
+  model: GPT | Llama | Deepseek | SmolLM3,
+  tok: Tokenizer,
+) {
   console.log("\n--- inference ---");
 
   for (let s = 0; s < 20; s++) {

@@ -13,6 +13,7 @@ import { infere, train } from "./src/utils/train";
 import { loadData } from "./src/utils/func";
 import { Llama, LlamaConfig } from "./src/models/llama";
 import { Deepseek, DeepseekConfig } from "./src/models/deepseek";
+import { SmolLM3, SmolLM3Config } from "./src/models/somllm";
 
 let docs = await loadData();
 let tok = new Tokenizer(docs);
@@ -28,6 +29,9 @@ if (Bun.argv[2] == "gpt") {
 } else if (Bun.argv[2] == "deepseek") {
   let deepseekConfig = new DeepseekConfig();
   model = new Deepseek(deepseekConfig, tok);
+} else if (Bun.argv[2] == "smollm") {
+  let smollmConfig = new SmolLM3Config();
+  model = new SmolLM3(smollmConfig, tok);
 }
 
 if (model !== undefined) {
