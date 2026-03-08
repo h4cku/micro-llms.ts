@@ -11,6 +11,40 @@ export class GPTConfig {
   head_dim = this.n_embd / this.n_head;
 }
 
+/**
+ * Micro GPT — a toy implementation capturing the key architectural ideas
+ * of a GPT-like decoder-only transformer model.
+ *
+ * Key architecture highlights:
+ *
+ *  1. Decoder-Only Transformer Blocks
+ *     • Each layer consists of a multi-head self-attention mechanism followed by a two-layer Feed-Forward Network (FFN).
+ *
+ *  2. Multi-Head Self-Attention
+ *     • Queries (Q), Keys (K), and Values (V) are projected from the input.
+ *     • Attention logits are calculated as a dot product of Q and K, scaled by the square root of the head dimension.
+ *     • `softmax` is applied to the logits to obtain attention weights.
+ *     • The output of each head is a weighted sum of V.
+ *     • Outputs from all heads are concatenated and then linearly projected.
+ *
+ *  3. Positional Embeddings
+ *     • Uses both Word Token Embeddings (`wte`) and Word Positional Embeddings (`wpe`).
+ *     • The input to the transformer blocks is the sum of these two embeddings.
+ *
+ *  4. Feed-Forward Network (FFN)
+ *     • A two-layer MLP (`mlp_fc1` and `mlp_fc2`) with a non-linear activation function (ReLU squared in this micro-implementation: `relu().pow(2)`).
+ *
+ *  5. RMSNorm
+ *     • Applied at the beginning of each transformer block (before attention and FFN) and after the input embedding.
+ *
+ *  6. Residual Connections
+ *     • Applied after the attention block and after the FFN block.
+ *
+ *  7. Separate Embeddings
+ *     • `wte`, `wpe`, and `lm_head` are distinct projections.
+ *
+ * Micro defaults are intentionally tiny for autograd / educational use.
+ */
 export class GPT {
   state: Record<string, Value[][]>;
   params: Value[];

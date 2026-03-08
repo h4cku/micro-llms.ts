@@ -17,6 +17,31 @@ export class DeepseekConfig {
   head_dim = this.n_embd / this.n_head;
 }
 
+/**
+ * Micro Deepseek — a toy implementation capturing the key architectural ideas
+ * of the Deepseek LLM.
+ *
+ * Key architecture highlights:
+ *
+ *  1. Multi-Head Latent Attention (MLA)
+ *     • Compresses Key/Value (KV) pairs into a lower `latent_dim` representation.
+ *     • Uses this compressed latent KV in the attention mechanism to generate full KV for dot-product attention.
+ *     • Applies Rotational Positional Embeddings (RoPE) to Query (Q) and Key (K) slices.
+ *
+ *  2. Mixture of Experts (MoE)
+ *     • Employs `n_experts` feed-forward experts per layer.
+ *     • A `router` network determines the contribution of each expert via `softmax` probabilities.
+ *     • Each expert consists of `gate`, `up`, and `down` linear layers, where `gate` and `up` outputs are combined using a Swish-Gated Linear Unit (SwiGLU) like activation (`silu`).
+ *     • The outputs of all experts are weighted by the router probabilities and summed.
+ *
+ *  3. RMSNorm
+ *     • Applied before both the MLA and MoE blocks, and as a final normalization layer.
+ *
+ *  4. Separate Embeddings
+ *     • `wte` (word token embedding) and `lm_head` (language model head) are distinct projections.
+ *
+ * Micro defaults are intentionally tiny for autograd / educational use.
+ */
 export class Deepseek {
   state: Record<string, Value[][]>;
   params: Value[];
