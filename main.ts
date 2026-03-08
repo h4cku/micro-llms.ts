@@ -14,6 +14,7 @@ import { loadData } from "./src/utils/func";
 import { Llama, LlamaConfig } from "./src/models/llama";
 import { Deepseek, DeepseekConfig } from "./src/models/deepseek";
 import { SmolLM3, SmolLM3Config } from "./src/models/somllm";
+import { Qwen3, Qwen3Config } from "./src/models/qwen";
 
 let docs = await loadData();
 let tok = new Tokenizer(docs);
@@ -32,6 +33,9 @@ if (Bun.argv[2] == "gpt") {
 } else if (Bun.argv[2] == "smollm") {
   let smollmConfig = new SmolLM3Config();
   model = new SmolLM3(smollmConfig, tok);
+} else if (Bun.argv[2] == "qwen") {
+  let qwenConfig = new Qwen3Config();
+  model = new Qwen3(qwenConfig, tok);
 }
 
 if (model !== undefined) {

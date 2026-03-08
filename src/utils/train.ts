@@ -7,9 +7,10 @@ import { softmax } from "../core/ops";
 import type { Llama } from "../models/llama";
 import type { Deepseek } from "../models/deepseek";
 import type { SmolLM3 } from "../models/somllm";
+import type { Qwen3 } from "../models/qwen";
 
 export function train(
-  model: GPT | Llama | Deepseek | SmolLM3,
+  model: GPT | Llama | Deepseek | SmolLM3 | Qwen3,
   tok: Tokenizer,
   optim: Adam,
   docs: string[],
@@ -44,7 +45,7 @@ export function train(
 }
 
 export function infere(
-  model: GPT | Llama | Deepseek | SmolLM3,
+  model: GPT | Llama | Deepseek | SmolLM3 | Qwen3,
   tok: Tokenizer,
 ) {
   console.log("\n--- inference ---");
