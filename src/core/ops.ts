@@ -22,12 +22,17 @@ export function rmsnorm(x: Value[]): Value[] {
   return x.map((xi) => xi.mul(scale));
 }
 
-export function apply_rope(q_or_k: Value[], pos_id: number, head_dim: number) {
+export function apply_rope(
+  q_or_k: Value[],
+  pos_id: number,
+  head_dim: number,
+  base: number = 10_000,
+) {
   const result: Value[] = [];
 
   for (let i = 0; i < head_dim; i += 2) {
     // Compute rotation angle
-    const theta = pos_id / Math.pow(10000, i / head_dim);
+    const theta = pos_id / Math.pow(base, i / head_dim);
 
     const cosTheta = new Value(Math.cos(theta));
     const sinTheta = new Value(Math.sin(theta));
